@@ -143,8 +143,7 @@ class QuestionView extends Component {
       },
       crossDomain: true,
       success: (result) => {
-        console.log(result);
-        // window.location.reload();
+        window.location.reload();
       },
       error: (error) => {
         alert('Unable to add category. Please try your request again');
@@ -192,11 +191,16 @@ class QuestionView extends Component {
                 }}
               >
                 {this.state.categories[id]}
-                <img
+                {id > 6 ?<img
+                    className='category'
+                    alt={`${this.state.categories[id].toLowerCase()}`}
+                    src={`science.svg`}
+                  />
+                  : <img
                   className='category'
                   alt={`${this.state.categories[id].toLowerCase()}`}
                   src={`${this.state.categories[id].toLowerCase()}.svg`}
-                />
+                />}
               </li>
             ))}
           </ul>

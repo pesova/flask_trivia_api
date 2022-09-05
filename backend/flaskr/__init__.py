@@ -67,7 +67,6 @@ def create_app(test_config=None):
             abort(422)
 
         category_type = body.get('type')
-        print(category_type)
 
         try:
             category = Category(type=category_type)
