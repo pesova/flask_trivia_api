@@ -58,6 +58,29 @@ def create_app(test_config=None):
             'categories': {category.id: category.type for category in categories}
         })
 
+    # Add capability to create new categories.
+    @app.route("/categories", methods=['POST'])
+    def store_category():
+        body = request.get_json()
+
+        if 'type' not in body:
+            abort(422)
+
+        category_type = body.get('type')
+        print(category_type)
+
+        try:
+            category = Category(type=category_type)
+            category.insert()
+
+            return jsonify({
+                'success': True,
+                'created': category.id,
+            })
+
+        except:
+            abort(422)
+
 
 
     """

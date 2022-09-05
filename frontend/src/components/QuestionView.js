@@ -13,6 +13,7 @@ class QuestionView extends Component {
       totalQuestions: 0,
       categories: {},
       currentCategory: null,
+      category_input: '',
     };
   }
 
@@ -126,10 +127,55 @@ class QuestionView extends Component {
     }
   };
 
+  submitCategory = (event) => {
+    event.preventDefault();
+    console.log(this.state.category_input);
+    $.ajax({
+      url: '/categories', //TODO: update request URL
+      type: 'POST',
+      dataType: 'json',
+      contentType: 'application/json',
+      data: JSON.stringify({
+        type: this.state.category_input,
+      }),
+      xhrFields: {
+        withCredentials: true,
+      },
+      crossDomain: true,
+      success: (result) => {
+        console.log(result);
+        // window.location.reload();
+      },
+      error: (error) => {
+        alert('Unable to add category. Please try your request again');
+        return;
+      },
+    });
+  };
+
+  handleInputChange = () => {
+    this.setState({
+      category_input: this.category.value,
+    });
+  };
+
   render() {
     return (
       <div className='question-view'>
         <div className='categories-list'>
+            <br />
+
+          {/* submit category form */}
+          <form onSubmit={this.submitCategory}>
+            <input
+              placeholder='Add category...'
+              ref={(input) => (this.category = input)}
+              onChange={this.handleInputChange}
+              formMethod={'POST'}
+            />
+            <input type='submit' value='Submit' className='button' />
+          </form>
+
           <h2
             onClick={() => {
               this.getQuestions();
