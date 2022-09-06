@@ -94,7 +94,7 @@ class TriviaTestCase(unittest.TestCase):
         self.assertEqual(data['success'], False)
         self.assertEqual(data['message'], 'unprocessable')
 
-    def test_add_question(self):
+    def test_store_question(self):
         new_question = {
             'question': 'new question',
             'answer': 'new answer',
